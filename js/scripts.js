@@ -47,7 +47,9 @@ var gameState = 'notStarted',  //started // ended
 // display game elements
 var newGameElem = document.getElementById('js-newGameElement'),
     pickElem = document.getElementById('js-playerPickElement'),
-    resultsElem = document.getElementById('js-resultsTableElement');
+    resultsElem = document.getElementById('js-resultsTableElement'),
+    finalCongratsElem = document.getElementById('js-finalCongratsElement'),
+    finalCongratsText = document.getElementById('js-finalCongratsText');
 
 function setGameElements() {
   switch(gameState) {
@@ -55,14 +57,26 @@ function setGameElements() {
         newGameElem.style.display = 'none';
         pickElem.style.display = 'block';
         resultsElem.style.display = 'block';
-      break;
+        finalCongratsElem.style.display = 'none';
+        break;
     case 'ended':
+        if (player.score > computer.score) {
+            finalCongratsText.innerHTML = ('Gratulacje wygrałeś! ' + player.score + ' : ' + computer.score);
+        } else {
+            finalCongratsText.innerHTML = ('Przegrałeś ' + player.score + ' : ' + computer.score +' Spróbuj jeszcze raz!');
+        };
         newGameBtn.innerText = 'Jeszcze raz';
+        pickElem.style.display = 'none';
+        resultsElem.style.display = 'none';
+        newGameElem.style.display = 'block';
+        finalCongratsElem.style.display = 'block';
+        break;
     case 'notStarted':
     default:
         newGameElem.style.display = 'block';
         pickElem.style.display = 'none';
         resultsElem.style.display = 'none';
+        finalCongratsElem.style.display = 'none';
   }
 };
 
@@ -104,9 +118,11 @@ function checkRoundWinner(playerPick, computerPick) {
     if (winnerIs == 'player') {
         playerResultElem.innerHTML = "Wygrana!";
         player.score++;
+        setGamePoints();
     } else if (winnerIs == 'computer') {
         computerResultElem.innerHTML = "Wygrana!";
         computer.score++;
+        setGamePoints();
     }
 };
 
@@ -114,6 +130,13 @@ function checkRoundWinner(playerPick, computerPick) {
 function setGamePoints() {
     playerPointsElem.innerHTML = player.score;
     computerPointsElem.innerHTML = computer.score;
+
+    if ((player.score == 10) || (computer.score == 10)) {
+        endGame()
+    };
 };
 
-
+function endGame() {
+    gameState = 'ended';
+    setGameElements();
+};
