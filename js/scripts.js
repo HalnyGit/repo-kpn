@@ -9,13 +9,13 @@ var pickRock = document.getElementById('js-playerPick_rock'),
      pickPaper = document.getElementById('js-playerPick_paper'),
      pickScissors = document.getElementById('js-playerPick_scissors');
 
-pickRock.addEventListener('click', function() { playerPick('rock') });
-pickPaper.addEventListener('click', function() { playerPick('paper') });
-pickScissors.addEventListener('click', function() { playerPick('scissors') });
+pickRock.addEventListener('click', function() { playerPick('kamień') });
+pickPaper.addEventListener('click', function() { playerPick('papier') });
+pickScissors.addEventListener('click', function() { playerPick('nożyce') });
 
 // computer pick
 function getComputerPick() {
-    var possiblePicks = ['rock', 'paper', 'scissors'];
+    var possiblePicks = ['kamień', 'papier', 'nożyce'];
     return possiblePicks[Math.floor(Math.random()*3)];
 };
 
@@ -108,9 +108,9 @@ function checkRoundWinner(playerPick, computerPick) {
     if (playerPick == computerPick) {
         winnerIs = 'noone'; // remis
     } else if (
-        (computerPick == 'rock' &&  playerPick == 'scissors') ||
-        (computerPick == 'scissors' &&  playerPick == 'paper') ||
-        (computerPick == 'paper' &&  playerPick == 'rock')) {
+        (computerPick == 'kamień' &&  playerPick == 'nożyce') ||
+        (computerPick == 'nożyce' &&  playerPick == 'papier') ||
+        (computerPick == 'papier' &&  playerPick == 'kamień')) {
         
         winnerIs = 'computer';
     }
